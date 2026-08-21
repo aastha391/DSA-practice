@@ -20,7 +20,7 @@ class Solution {
             solve(n, open + 1, close,
                   curr + "(", ans);
         }
-        
+
         if (close < open) {
             solve(n, open, close + 1,
                   curr + ")", ans);
