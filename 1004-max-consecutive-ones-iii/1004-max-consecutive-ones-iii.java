@@ -6,15 +6,19 @@ class Solution {
                 count++;
             }
 
-            
             if(count<=k){
                 length=Math.max(length,r-l+1);
             }
 
-            while(count>k){
-                if(nums[l]==0){
-                count--;
-                }
+            // while(count>k){
+            //     if(nums[l]==0){
+            //     count--;
+            //     }
+            //     l++;
+            // }
+
+            if(count>k){
+                if(nums[l]==0) count--;
                 l++;
             }
         }
