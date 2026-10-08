@@ -24,17 +24,12 @@ class Solution {
         if(n==0) return 1;
 
         if(n<0){
-            return 1.0/solve(x,-n);
+            return 1/solve(x,-n);
         }
-
-        double half=solve(x,n/2);
 
         if(n%2==0){
-            return half*half;
+            return solve(x*x,n/2);
         }
-
-        else{
-            return half*half*x;
-        }
+            return x*solve(x*x,(n-1)/2);
     }
 }
