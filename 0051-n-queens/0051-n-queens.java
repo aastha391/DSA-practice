@@ -1,17 +1,84 @@
+// class Solution {
+//     public List<List<String>> solveNQueens(int n) {
+//         char[][] board=new char[n][n];
+//         for(int i=0;i<n;i++){
+//             for(int j=0;j<n;j++){
+//                 board[i][j]='.';
+//             }
+//         }
+//         List<List<String>> result=new ArrayList<>();
+//         solve(board,0,n,result);
+//         return result;
+//     }
+
+//     static void solve(char[][] board,int row,int n,List<List<String>> result){
+//         if(row>=n){
+//             List<String> temp=new ArrayList<>();
+//             for(int i=0;i<n;i++){
+//                 temp.add(new String(board[i]));
+//             }
+//             result.add(temp);
+//             return;
+//         }
+
+//         for(int col=0;col<n;col++){
+//             if(isSafe(board,row,col,n)){
+//                 board[row][col]='Q';
+
+//                 solve(board,row+1,n,result);
+
+//                 board[row][col]='.';
+//             }
+//         }
+//     }
+
+//     static boolean isSafe(char[][] board,int row,int col,int n){
+//         for(int i=row-1;i>=0;i--){
+//             if(board[i][col]=='Q'){
+//                 return false;
+//             }
+//         }
+
+//         for(int i=row,j=col;i>=0 && j>=0;i--,j--){
+//             if(board[i][j]=='Q'){
+//                 return false;
+//             }
+//         }
+
+//         for(int i=row,j=col;i>=0 && j<n;i--,j++){
+//             if(board[i][j]=='Q'){
+//                 return false;
+//             }
+//         }
+
+//         return true;
+//     }
+// }
+
+
 class Solution {
+    static Set<Integer> column=new HashSet<>();
+    static Set<Integer> diag=new HashSet<>();
+    static Set<Integer> antidiag=new HashSet<>();
+    static List<List<String>> result=new ArrayList<>();
+
     public List<List<String>> solveNQueens(int n) {
+        column.clear();
+        diag.clear();
+        antidiag.clear();
+        result.clear();
+
         char[][] board=new char[n][n];
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
                 board[i][j]='.';
             }
         }
-        List<List<String>> result=new ArrayList<>();
-        solve(board,0,n,result);
+        solve(board,0,n);
         return result;
     }
 
-    static void solve(char[][] board,int row,int n,List<List<String>> result){
+    static void solve(char[][] board,int row,int n){
         if(row>=n){
             List<String> temp=new ArrayList<>();
             for(int i=0;i<n;i++){
@@ -22,35 +89,23 @@ class Solution {
         }
 
         for(int col=0;col<n;col++){
-            if(isSafe(board,row,col,n)){
+            int d=row+col;
+            int ad=row-col;
+
+            if(column.contains(col) || diag.contains(d) || antidiag.contains(ad)){
+                continue;
+            }
+                column.add(col);
+                diag.add(d);
+                antidiag.add(ad);            
                 board[row][col]='Q';
 
-                solve(board,row+1,n,result);
+                solve(board,row+1,n);
 
+                column.remove(col);
+                diag.remove(d);
+                antidiag.remove(ad);
                 board[row][col]='.';
-            }
         }
-    }
-
-    static boolean isSafe(char[][] board,int row,int col,int n){
-        for(int i=row-1;i>=0;i--){
-            if(board[i][col]=='Q'){
-                return false;
-            }
-        }
-
-        for(int i=row,j=col;i>=0 && j>=0;i--,j--){
-            if(board[i][j]=='Q'){
-                return false;
-            }
-        }
-
-        for(int i=row,j=col;i>=0 && j<n;i--,j++){
-            if(board[i][j]=='Q'){
-                return false;
-            }
-        }
-
-        return true;
     }
 }
