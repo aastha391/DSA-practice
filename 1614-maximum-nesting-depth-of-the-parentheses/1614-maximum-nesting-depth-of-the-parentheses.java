@@ -4,12 +4,11 @@ class Solution {
         for(int i=0;i<s.length();i++){
             if(s.charAt(i)=='('){
                 count++;
+                maxLen=Math.max(maxLen,count);
             }
             if(s.charAt(i)==')'){
                 count--;
             }
-
-            maxLen=Math.max(maxLen,count);
         }
         return maxLen;
     }
